@@ -48,14 +48,14 @@ def check_password():
 def create_2d_heatmap(Z_db_clip, X, Y, pos_mask, neg_mask, topN, cmap="jet"):
     fig = go.Figure()
 
-    # MATLAB Stili Heatmap ve Interpolasyon
+    # MATLAB Stili Heatmap Colorbar (Plotly Hatasını Veren Ksım Silindi)
     fig.add_trace(go.Heatmap(
         z=Z_db_clip, x=X[0, :], y=Y[:, 0],
         colorscale=cmap, 
-        colorbar=dict(title="VV (dB)"), name="VV",
+        colorbar=dict(title="VV (dB)"), name="VV"
     ))
 
-    # Contour eklentileri
+    # Contour eklentileri (Kırmızı ve Mavi Kontur Yansımaları)
     if np.any(pos_mask):
         fig.add_trace(go.Contour(
             z=pos_mask.astype(int), x=X[0, :], y=Y[:, 0], showscale=False,
@@ -123,7 +123,7 @@ def create_matplotlib_report(Z_db, X, Y, pos_mask, neg_mask, topN, cmap="jet"):
     return fig
 
 # -------------------------
-# MAIN
+# MAIN ANA AKIŞ
 # -------------------------
 def main():
     check_password()
@@ -193,7 +193,7 @@ def main():
                             with st.container(border=True):
                                 st.markdown(f"### {box_col} Hedef #{i} - {t['type']} | Sınıf: **{t['depth_class']}**")
                                 st.markdown(f"**🤖 AI Yorumu:** _{t['smart_comment']}_")
-                                st.markdown(f"- **Skor:** `{t['score']:.2f}` | **Pik:** `{t['peak_z']:.2f}` | **Alan:** `{t['area']} px`")
+                                st.markdown(f"- **Skor:** `{t['score']:.2f}` | **Pik Z:** `{t['peak_z']:.2f}` | **Alan:** `{t['area']} px`")
                                 st.markdown(f"- **Koordinat:** `{t['target_lat']:.8f}, {t['target_lon']:.8f}`")
                                 
                                 cA, cb = st.columns(2)
@@ -205,7 +205,7 @@ def main():
                         cap_m=int(cap_m), thr=float(thr), z_mode=z_mode, top=topN[:10],
                     )
                 except Exception as e:
-                    st.error(f"Hata: {e}")
+                    st.error(f"Hata Oluştu: Lütfen konsolu kontrol edin. Detay: {e}")
                     logging.exception("V3 Hatası")
 
 if __name__ == "__main__":
