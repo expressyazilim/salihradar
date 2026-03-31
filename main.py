@@ -53,7 +53,6 @@ def create_2d_heatmap(Z_db_clip, X, Y, pos_mask, neg_mask, topN, cmap="jet"):
         z=Z_db_clip, x=X[0, :], y=Y[:, 0],
         colorscale=cmap, 
         colorbar=dict(title="VV (dB)"), name="VV",
-        zsmooth="best"
     ))
 
     # Contour eklentileri
