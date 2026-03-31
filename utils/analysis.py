@@ -159,6 +159,16 @@ def run_analysis_from_tiff_bytes(
         pos_mask = (Z_z >= thr)
         neg_mask = (Z_z <= -thr)
     else:
+            # V3 DÜZELTME: Filtrenin kenarlarda oluşturduğu sahte ışımaları sıfırla ki oraları hedef sanmasın
+    kenar = 8 
+    Z_z[:kenar, :] = 0
+    Z_z[-kenar:, :] = 0
+    Z_z[:, :kenar] = 0
+    Z_z[:, -kenar:] = 0
+
+    if posneg:
+        pos_mask = (Z_z >= thr)
+
         pos_mask = (np.abs(Z_z) >= thr)
         neg_mask = np.zeros_like(pos_mask, dtype=bool)
 
